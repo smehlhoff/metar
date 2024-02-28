@@ -1,15 +1,19 @@
-from sqlalchemy import (
-    Boolean,
-    Column,
-    Float,
-    ForeignKey,
-    Integer,
-    String,
-    create_engine,
-)
+import os
+
+from sqlalchemy import URL, Boolean, Column, Float, ForeignKey, Integer, String, create_engine
 from sqlalchemy.orm import declarative_base, relationship, sessionmaker
 
-engine = create_engine("postgresql://postgres:dev@localhost:5432/postgres")
+conn = URL.create(
+    "postgresql",
+    username=os.getenv("POSTGRES_USER", "postgres"),
+    password=os.getenv("SERVER_PASSWORD", "dev"),
+    host=os.getenv("POSTGRES_HOST", "localhost"),
+    port=os.getenv("POSTGRES_PORT", 5432),
+    database=os.getenv("POSTGRES_DB", "postgres"),
+)
+
+
+engine = create_engine(conn)
 Base = declarative_base()
 
 
