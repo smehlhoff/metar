@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM ubuntu:22.04
 
 # Install required packages
 RUN apt-get update \
@@ -18,7 +18,7 @@ RUN ssh-keygen -A \
     && mkdir -p /run/sshd
 
 # Copy entrypoint script and set permissions
-COPY entrypoint.sh /entrypoint.sh
+COPY ./docker/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
 # Expose SSH port

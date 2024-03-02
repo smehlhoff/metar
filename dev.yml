@@ -16,9 +16,9 @@ services:
   ubuntu_server:
     container_name: ubuntu_server
     build:
-      context: ./docker
-      dockerfile: Dockerfile
-    image: ubuntu:latest
+      context: .
+      dockerfile: ./docker/Dockerfile
+    image: ubuntu:22.04
     env_file: ./.envs/.dev
     command: tail -f /dev/null
     stdin_open: true
