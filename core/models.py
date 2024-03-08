@@ -5,11 +5,11 @@ from sqlalchemy.orm import declarative_base, relationship, sessionmaker
 
 conn = URL.create(
     "postgresql",
-    username=os.getenv("POSTGRES_USER", "postgres"),
+    username=os.getenv("POSTGRES_USER", "dev"),
     password=os.getenv("SERVER_PASSWORD", "dev"),
-    host=os.getenv("POSTGRES_HOST", "localhost"),
+    host=os.getenv("POSTGRES_HOST", "db"),
     port=os.getenv("POSTGRES_PORT", 5432),
-    database=os.getenv("POSTGRES_DB", "postgres"),
+    database=os.getenv("POSTGRES_DB", "dev"),
 )
 
 
