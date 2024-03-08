@@ -162,4 +162,3 @@ cython_debug/
 # Misc
 .envs/.dev
 .ruff_cache
-/docker/setup.sh
