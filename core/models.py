@@ -33,7 +33,7 @@ class Station(Base):
 
     id = Column(Integer, primary_key=True)
 
-    station_code = Column(String)
+    station_code = Column(String, index=True)
     lat = Column(Float)
     lon = Column(Float)
     elev = Column(Integer)
@@ -56,7 +56,7 @@ class Metar(Base):
     station = relationship("Station", back_populates="metars")
 
     raw_text = Column(String)
-    station_code = Column(String)
+    station_code = Column(String, index=True)
 
     observation_time = Column(String)
 
