@@ -1,12 +1,14 @@
 import gzip
 import json
+from typing import Any, Dict, List
 
 import requests
+from sqlalchemy.orm import Session
 
 from core.models import Station
 
 
-def collect_stations():
+def collect_stations() -> List[Dict[str, Any]]:
     url = "https://aviationweather.gov/data/cache/stations.cache.json.gz"
 
     station_list = []
@@ -24,7 +26,7 @@ def collect_stations():
     return station_list
 
 
-def insert_stations(session, station_list):
+def insert_stations(session: Session, station_list: List[Dict[str, Any]]) -> None:
     station_codes = [station["icaoId"] for station in station_list]
     existing_stations = session.query(Station).filter(Station.station_code.in_(station_codes)).all()
     existing_stations = [station.station_code for station in existing_stations]

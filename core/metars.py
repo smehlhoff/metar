@@ -1,12 +1,14 @@
 import csv
 import gzip
+from typing import Any, Dict, List, Union
 
 import requests
+from sqlalchemy.orm import Session
 
 from core.models import Metar, Station
 
 
-def convert_cardinal_direction(value):
+def convert_cardinal_direction(value: str) -> str:
     if value == "VRB":
         return value
     else:
@@ -33,27 +35,27 @@ def convert_cardinal_direction(value):
         return directions[round(float(value) / 22.5)]
 
 
-def convert_kt_to_mph(value):
+def convert_kt_to_mph(value: str) -> float:
     return round(float(value) * 1.151)
 
 
-def convert_c_to_f(value):
+def convert_c_to_f(value: str) -> float:
     return (float(value) * 1.8) + 32
 
 
-def convert_statute_mi(value):
+def convert_statute_mi(value: str) -> Union[str, None]:
     match value:
         case "":
             return None
         case "6+":
-            return 6
+            return "6"
         case "10+":
-            return 10
+            return "10"
         case _:
             return value
 
 
-def collect_metars():
+def collect_metars() -> List[Dict[str, Any]]:
     url = "https://aviationweather.gov/data/cache/metars.cache.csv.gz"
 
     metar_list = []
@@ -87,7 +89,9 @@ def collect_metars():
                         "wind_gust_mph": None if metar[9] == "" else convert_kt_to_mph(metar[9]),
                         "visibility_statute_mi": convert_statute_mi(metar[10]),
                         "altim_in_hg": None if metar[11] == "0" or metar[11] == "" else metar[11],
-                        "sea_level_pressure_mb": None if metar[12] == "" else metar[12],
+                        "sea_level_pressure_mb": None
+                        if metar[12] == "0" or metar[12] == ""
+                        else metar[12],
                         "corrected": False if metar[13] == "" else True,
                         "auto": False if metar[14] == "" else True,
                         "auto_station": False if metar[15] == "" else True,
@@ -128,7 +132,7 @@ def collect_metars():
     return metar_list
 
 
-def insert_metars(session, metar_list):
+def insert_metars(session: Session, metar_list: List[Dict[str, Any]]) -> None:
     station_codes = [metar["station_code"] for metar in metar_list]
     existing_stations = session.query(Station).filter(Station.station_code.in_(station_codes)).all()
     existing_stations = {station.station_code: station.id for station in existing_stations}
