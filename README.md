@@ -4,15 +4,25 @@ Retrieves latest METARs from NOAA Aviation Weather Center and inserts data into 
 
 Do not use this script for real-world navigation.
 
+Here is an example use case in grafana.
+
+![alt text](./docker/grafana/dashboard.png)
+
 ## Install
 
-Configure Postgres connection in `core/models.py`. For example,
-
-`engine = create_engine("postgresql://postgres:dev@localhost:5432/postgres")`
-
-Next, ensure you have the right dependencies installed.
-
+    $ git clone https://github.com/smehlhoff/metar.git
+    $ cd metar
+    $ python3.11 -m venv venv
+    $ source venv/bin/activate
     $ pip install -r requirements.txt
+
+Ensure the following environmental variables are set:
+
+    POSTGRES_DB=
+    POSTGRES_HOST=
+    POSTGRES_PASSWORD=
+    POSTGRES_PORT=
+    POSTGRES_USER=
 
 ## Usage
 
