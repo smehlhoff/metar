@@ -4,7 +4,7 @@ Retrieves latest METARs from NOAA Aviation Weather Center and inserts data into 
 
 Do not use this script for real-world navigation.
 
-Here is an example use case in grafana.
+Here is an example use case in Grafana.
 
 ![alt text](./docker/grafana/dashboard.png)
 
