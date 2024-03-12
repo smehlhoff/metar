@@ -9,3 +9,6 @@ usermod -aG sudo $SERVER_USERNAME
 
 # Start SSH daemon
 /usr/sbin/sshd -D
+
+# Change default shell for user
+chsh -s /bin/bash $SERVER_USERNAME
