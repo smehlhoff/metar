@@ -8,20 +8,6 @@ from sqlalchemy.orm import Session
 from core.models import Metar, Station
 
 
-def convert_altimeter(value: str) -> float:
-    match len(value):
-        case 2:
-            alt = list(value)
-            alt.extend([".", "0", "0"])
-            return float("".join(alt))
-        case 4:
-            alt = list(value)
-            alt.append("0")
-            return float("".join(alt))
-        case _:
-            return float(value)
-
-
 def convert_cardinal_direction(value: str) -> str:
     if value == "VRB":
         return value
@@ -103,8 +89,8 @@ def collect_metars() -> List[Dict[str, Any]]:
                         "wind_gust_mph": None if metar[9] == "" else convert_kt_to_mph(metar[9]),
                         "visibility_statute_mi": convert_statute_mi(metar[10]),
                         "altim_in_hg": None
-                        if metar[11] == "0" or metar[11] == ""
-                        else convert_altimeter(metar[11]),
+                        if metar[11] == "0.00" or metar[11] == ""
+                        else metar[11],
                         "sea_level_pressure_mb": None
                         if metar[12] == "0" or metar[12] == ""
                         else metar[12],
