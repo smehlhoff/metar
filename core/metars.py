@@ -40,7 +40,7 @@ def convert_kt_to_mph(value: str) -> float:
 
 
 def convert_c_to_f(value: str) -> float:
-    return (float(value) * 1.8) + 32
+    return round((float(value) * 1.8) + 32, 2)
 
 
 def convert_statute_mi(value: str) -> Union[str, None]:
