@@ -7,8 +7,8 @@ useradd -m $SERVER_USERNAME && \
 # Make the user a root user
 usermod -aG sudo $SERVER_USERNAME
 
+# Change default shell for user
+usermod -s /bin/bash $SERVER_USERNAME
+
 # Start SSH daemon
 /usr/sbin/sshd -D
-
-# Change default shell for user
-chsh -s /bin/bash $SERVER_USERNAME
